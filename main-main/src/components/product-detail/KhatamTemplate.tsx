@@ -25,7 +25,7 @@ export function KhatamTemplate({ product }: { product: KhatamProduct }) {
     s.weight != null ? `${s.weight} ${s.weightUnit ?? 'g'}` : null;
 
   return (
-    <div className="space-y-6">
+    <div>
       <OverviewSection description={product.description} origin={product.origin} />
 
       {/* Dimensions & Materials */}

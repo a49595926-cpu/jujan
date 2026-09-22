@@ -1,9 +1,11 @@
 import { useRef, useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, MapPin, Layers, Hammer, Plus } from 'lucide-react';
 import { MINA_COLLECTIONS, type MinaProduct, type MinaType } from '@/data/minakari';
 import { useCart } from '@/context/CartContext';
 import type { Product } from '@/data/products';
 import { useReveal } from '@/hooks/useReveal';
+import { slugify } from '@/data/catalog';
 
 export function MinakariCollection() {
   const { ref, isVisible } = useReveal();
@@ -127,6 +129,7 @@ function MinaCard({ mina, delay }: { mina: MinaProduct; delay: number }) {
   };
 
   return (
+    <Link to={`/products/minakari/${slugify(mina.name)}`} className="block h-full focus:outline-none">
     <article
       ref={ref}
       className={`reveal ${isVisible ? 'is-visible' : ''} group relative flex h-full flex-col overflow-hidden rounded-3xl border border-saffron-500/15 bg-espresso-800/50 transition-all duration-500 hover:-translate-y-1.5 hover:border-saffron-400/50 hover:shadow-gold-lg`}
@@ -165,7 +168,7 @@ function MinaCard({ mina, delay }: { mina: MinaProduct; delay: number }) {
 
         <button
           type="button"
-          onClick={handleAdd}
+          onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleAdd(); }}
           className="group/btn mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-gold-gradient px-5 py-3 font-semibold text-espresso-950 shadow-gold transition-transform hover:scale-[1.03] active:scale-100"
           aria-label={`Add ${mina.name} to cart`}
         >
@@ -174,6 +177,7 @@ function MinaCard({ mina, delay }: { mina: MinaProduct; delay: number }) {
         </button>
       </div>
     </article>
+    </Link>
   );
 }
 

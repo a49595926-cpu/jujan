@@ -5,7 +5,6 @@ import {
   MapPin,
   Clock,
   Award,
-  Info,
 } from 'lucide-react';
 import type { CarpetProduct } from '@/types/product';
 import {
@@ -31,7 +30,7 @@ export function CarpetTemplate({ product }: { product: CarpetProduct }) {
       : null;
 
   return (
-    <div className="space-y-6">
+    <div>
       <OverviewSection description={product.description} origin={product.origin} />
 
       {/* Dimensions & Weight */}

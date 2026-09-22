@@ -33,7 +33,7 @@ export function TapestryTemplate({ product }: { product: TapestryProduct }) {
   const frameDimsStr = formatFrameDimensions(s.frameDimensions);
 
   return (
-    <div className="space-y-6">
+    <div>
       <OverviewSection description={product.description} origin={product.origin} />
 
       {/* Dimensions & Materials */}

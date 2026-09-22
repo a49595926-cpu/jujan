@@ -1,9 +1,11 @@
 import { useRef, useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Lock, Ruler, BadgeCheck, Plus } from 'lucide-react';
 import { TABLO_COLLECTIONS, type TabloFarsh, type TabloGrade } from '@/data/tablos';
 import { useCart } from '@/context/CartContext';
 import type { Product } from '@/data/products';
 import { useReveal } from '@/hooks/useReveal';
+import { slugify } from '@/data/catalog';
 
 const gradeStyles: Record<TabloGrade, { ring: string; text: string; bg: string; label: string }> = {
   A: { ring: 'border-saffron-400/60', text: 'text-saffron-200', bg: 'bg-saffron-500/15', label: 'Grade A' },
@@ -135,6 +137,7 @@ function TabloCard({ tablo, delay, isRoyal }: { tablo: TabloFarsh; delay: number
   };
 
   return (
+    <Link to={`/products/tapestry/${slugify(tablo.name)}`} className="block h-full focus:outline-none">
     <article
       ref={ref}
       className={`reveal ${isVisible ? 'is-visible' : ''} group relative flex h-full flex-col overflow-hidden rounded-3xl border border-saffron-500/15 bg-espresso-800/50 transition-all duration-500 hover:-translate-y-1.5 hover:border-saffron-400/50 hover:shadow-gold-lg`}
@@ -194,6 +197,7 @@ function TabloCard({ tablo, delay, isRoyal }: { tablo: TabloFarsh; delay: number
         {isRoyal ? (
           <button
             type="button"
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
             className="mt-4 flex w-full items-center justify-center gap-2 rounded-full border border-saffron-400/40 bg-saffron-500/10 px-5 py-3 text-sm font-semibold uppercase tracking-wider text-saffron-200 transition-all duration-300 hover:border-saffron-300/60 hover:bg-saffron-500/20 hover:text-saffron-100"
           >
             <Lock className="h-4 w-4" />
@@ -202,7 +206,7 @@ function TabloCard({ tablo, delay, isRoyal }: { tablo: TabloFarsh; delay: number
         ) : (
           <button
             type="button"
-            onClick={handleAdd}
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleAdd(); }}
             className="group/btn mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-gold-gradient px-5 py-3 font-semibold text-espresso-950 shadow-gold transition-transform hover:scale-[1.03] active:scale-100"
             aria-label={`Add ${tablo.name} to cart`}
           >
@@ -212,6 +216,7 @@ function TabloCard({ tablo, delay, isRoyal }: { tablo: TabloFarsh; delay: number
         )}
       </div>
     </article>
+    </Link>
   );
 }
 
