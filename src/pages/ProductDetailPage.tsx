@@ -71,9 +71,9 @@ export function ProductDetailPage() {
     <div className="relative min-h-screen bg-espresso-950 pt-20">
       <div className="absolute inset-0 bg-gradient-to-b from-espresso-900 via-espresso-950 to-espresso-900" />
 
-      <div className="relative mx-auto max-w-7xl px-5 py-8 sm:px-8 sm:py-12">
+      <div className="relative mx-auto max-w-6xl px-6 py-8 sm:px-10 sm:py-14">
         {/* Breadcrumb */}
-        <nav className="mb-10 flex items-center gap-2.5 text-sm">
+        <nav className="mb-12 flex items-center gap-3 text-sm">
           <button
             onClick={() => navigate(-1)}
             className="flex items-center gap-2 text-cream-400/50 transition-colors hover:text-saffron-300"
@@ -87,7 +87,7 @@ export function ProductDetailPage() {
           </span>
         </nav>
 
-        <div className="grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-14">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
           {/* Gallery — left */}
           <div className="lg:sticky lg:top-24 lg:self-start">
             <ProductGallery
@@ -97,7 +97,7 @@ export function ProductDetailPage() {
           </div>
 
           {/* Info — right */}
-          <div className="space-y-0">
+          <div className="min-w-0">
             <ProductHeader
               name={product.name}
               shortDescription={product.shortDescription}
@@ -108,7 +108,7 @@ export function ProductDetailPage() {
               onAddToCart={handleAddToCart}
             />
 
-            <div className="mt-4 divide-y divide-saffron-500/6">
+            <div className="mt-10 divide-y divide-saffron-500/8">
               {renderTemplate()}
             </div>
           </div>

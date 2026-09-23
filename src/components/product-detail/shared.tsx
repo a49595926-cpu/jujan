@@ -66,14 +66,14 @@ export interface SpecSectionProps {
 
 export function SpecSection({ title, icon: Icon, children }: SpecSectionProps) {
   return (
-    <section className="py-7 first:pt-6">
-      <div className="mb-5 flex items-center gap-2.5">
+    <section className="py-7 first:pt-8">
+      <div className="mb-6 flex items-center gap-2.5">
         {Icon && (
-          <Icon className="h-4 w-4 text-saffron-400/50" />
+          <Icon className="h-3.5 w-3.5 text-saffron-400/40" />
         )}
-        <h3 className="font-serif text-lg tracking-tight text-cream-50">{title}</h3>
+        <h3 className="font-serif text-base tracking-[0.04em] text-cream-200">{title}</h3>
       </div>
-      <dl className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
+      <dl className="grid grid-cols-1 gap-x-10 gap-y-5 sm:grid-cols-2">
         {children}
       </dl>
     </section>
@@ -90,9 +90,9 @@ export interface SpecRowProps {
 export function SpecRow({ label, value }: SpecRowProps) {
   if (hasValue(value)) return null;
   return (
-    <div className="flex flex-col gap-0.5">
-      <dt className="text-[10px] uppercase tracking-[0.2em] text-cream-400/50">{label}</dt>
-      <dd className="text-[15px] leading-relaxed text-cream-100">{value}</dd>
+    <div className="flex flex-col gap-1">
+      <dt className="text-[11px] uppercase tracking-[0.18em] text-cream-400/45">{label}</dt>
+      <dd className="text-[15px] leading-snug text-cream-100">{value}</dd>
     </div>
   );
 }
@@ -107,8 +107,8 @@ export interface BooleanRowProps {
 export function BooleanRow({ label, value }: BooleanRowProps) {
   if (value === null || value === undefined) return null;
   return (
-    <div className="flex flex-col gap-0.5">
-      <dt className="text-[10px] uppercase tracking-[0.2em] text-cream-400/50">{label}</dt>
+    <div className="flex flex-col gap-1">
+      <dt className="text-[11px] uppercase tracking-[0.18em] text-cream-400/45">{label}</dt>
       <dd className="flex items-center gap-1.5 text-[15px] text-cream-100">
         {value ? (
           <Check className="h-3.5 w-3.5 text-teal-400" />
@@ -131,8 +131,8 @@ export interface ListRowProps {
 export function ListRow({ label, values }: ListRowProps) {
   if (!values || values.length === 0) return null;
   return (
-    <div className="flex flex-col gap-1 sm:col-span-2">
-      <dt className="text-[10px] uppercase tracking-[0.2em] text-cream-400/50">{label}</dt>
+    <div className="flex flex-col gap-1.5 sm:col-span-2">
+      <dt className="text-[11px] uppercase tracking-[0.18em] text-cream-400/45">{label}</dt>
       <dd className="flex flex-wrap gap-2">
         {values.map((v, i) => (
           <span
@@ -224,56 +224,66 @@ export function ProductHeader({
   onAddToCart,
 }: ProductHeaderProps) {
   const availabilityStyles: Record<string, string> = {
-    'in-stock': 'border-teal-400/25 text-teal-400',
-    'made-to-order': 'border-saffron-400/25 text-saffron-300',
-    'limited': 'border-crimson-400/25 text-crimson-400',
-    'sold-out': 'border-cream-400/15 text-cream-400',
-    'pre-order': 'border-saffron-400/25 text-saffron-300',
+    'in-stock': 'text-teal-400',
+    'made-to-order': 'text-saffron-300',
+    'limited': 'text-crimson-400',
+    'sold-out': 'text-cream-400',
+    'pre-order': 'text-saffron-300',
   };
 
   const availabilityLabel = availability.replace(/-/g, ' ');
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-3">
+    <div className="space-y-7">
+      {/* Availability + code — quiet, top */}
+      <div className="flex items-center gap-4">
         <span
-          className={`rounded-full border px-3 py-1 text-[10px] uppercase tracking-[0.2em] ${
+          className={`text-[11px] uppercase tracking-[0.22em] ${
             availabilityStyles[availability] ?? availabilityStyles['in-stock']
           }`}
         >
           {availabilityLabel}
         </span>
         {productCode && (
-          <span className="text-[11px] uppercase tracking-[0.18em] text-cream-400/40">
+          <span className="text-[11px] uppercase tracking-[0.18em] text-cream-400/35">
             {productCode}
           </span>
         )}
       </div>
 
-      <h1 className="font-serif text-4xl leading-[1.1] text-cream-50 sm:text-[2.75rem]">
+      {/* Name — the dominant element */}
+      <h1 className="font-serif text-[2.5rem] leading-[1.08] text-cream-50 sm:text-5xl">
         {name}
       </h1>
 
+      {/* Short description — supporting, lighter weight */}
       {shortDescription && (
-        <p className="text-lg leading-relaxed text-cream-300/80 text-balance">
+        <p className="text-lg leading-[1.6] text-cream-300/70 text-balance">
           {shortDescription}
         </p>
       )}
 
-      <div className="flex items-baseline gap-2 pt-1">
-        <span className="font-serif text-3xl text-saffron-300">
-          {formatPrice(price, currency)}
-        </span>
-        <span className="text-sm text-cream-400/50">{currency}</span>
-      </div>
+      {/* Price block — intentional, separated */}
+      <div className="flex items-end justify-between gap-4 border-y border-saffron-500/10 py-5">
+        <div className="flex flex-col gap-1">
+          <span className="text-[10px] uppercase tracking-[0.25em] text-cream-400/40">Price</span>
+          <div className="flex items-baseline gap-1.5">
+            <span className="font-serif text-4xl text-cream-50">
+              {formatPrice(price, currency)}
+            </span>
+            <span className="text-sm tracking-wide text-cream-400/50">{currency}</span>
+          </div>
+        </div>
 
-      <button
-        onClick={onAddToCart}
-        className="flex w-full items-center justify-center gap-2 rounded-full bg-gold-gradient px-6 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-espresso-950 shadow-gold transition-all duration-300 hover:brightness-105 active:scale-[0.98] sm:w-auto sm:min-w-[260px]"
-        aria-label={`Add ${name} to cart`}
-      >
-        Add to Cart
-      </button>
+        {/* CTA — inline with price, contained */}
+        <button
+          onClick={onAddToCart}
+          className="flex shrink-0 items-center justify-center gap-2.5 rounded-full bg-gold-gradient px-8 py-3.5 text-[13px] font-semibold uppercase tracking-[0.14em] text-espresso-950 shadow-gold transition-all duration-300 hover:brightness-105 active:scale-[0.98]"
+          aria-label={`Add ${name} to cart`}
+        >
+          Add to Cart
+        </button>
+      </div>
     </div>
   );
 }
@@ -289,15 +299,15 @@ export function OverviewSection({ description, origin }: OverviewSectionProps) {
   if (hasValue(description) && hasValue(origin)) return null;
 
   return (
-    <section className="py-7 first:pt-6">
+    <section className="py-7 first:pt-8">
       <div className="mb-4 flex items-center gap-2.5">
-        <h3 className="font-serif text-lg tracking-tight text-cream-50">The Story</h3>
+        <h3 className="font-serif text-base tracking-[0.04em] text-cream-200">The Story</h3>
       </div>
       {description && (
         <p className="text-[17px] leading-[1.8] text-cream-200/85">{description}</p>
       )}
       {origin && (
-        <p className="mt-5 flex items-center gap-2 text-sm text-cream-400/60">
+        <p className="mt-5 flex items-center gap-2 text-sm text-cream-400/50">
           <span className="h-1 w-1 rounded-full bg-saffron-400/50" />
           <span className="uppercase tracking-[0.2em] text-[10px]">Origin</span>
           <span className="text-cream-200">{origin}</span>
